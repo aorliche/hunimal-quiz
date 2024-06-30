@@ -22,7 +22,7 @@ function shuffle(arr) {
 
 function numToHunimal(num) {
 	if (num == 0) {
-		return "&#x5500;";
+		return String.fromCharCode(0x5500);
 	}
 	let hun = "";
 	while (num > 0) {
@@ -58,6 +58,10 @@ function regenQuestion(typ) {
 		}
 	}
 	$('#feedback').classList.remove('hunimal-font');
+	$('#text-container').classList.add('hidden');
+	$('#choices').classList.remove('hidden');
+	$('#numpad').classList.add('hidden');
+	$('#question').classList.remove('hunimal-font');
 	let cs = [];
 	if (typ == 'h2d') {
 		const q = `What is ${huns[nums[0]]} in decimal?`;
@@ -78,17 +82,14 @@ function regenQuestion(typ) {
 		feedback = `${decs[nums[0]]} is ${huns[nums[0]]}`;
 	}
 	if (typ == 'mult') {
-		const q = `What is ${huns[nums[0]]} times ${huns[nums[1]]}?`;
-		$('#question').innerText = q;
-		correct = Math.floor(Math.random()*4);
-		for (let i=0; i<4; i++) {
-			$('#label' + i).classList.add("hunimal-font");
-			const num = nums[(i+1)*2]*nums[(i+1)*2+1];
-			$('#label' + i).innerText = numToHunimal(num);
-		}
-		const a = numToHunimal(nums[0]*nums[1]);
-		$('#label' + correct).innerText = a;
-		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${a}`;
+		$('#text').value = '';
+		$('#text-container').classList.remove('hidden');
+		$('#choices').classList.add('hidden');
+		$('#numpad').classList.remove('hidden');
+		$('#question').innerText = `What is ${huns[nums[0]]} (${numToHunimal(nums[0])}) times ${huns[nums[1]]} (${numToHunimal(nums[1])})?`;
+		$('#question').classList.add('hunimal-font');
+		correct = numToHunimal(nums[0]*nums[1]);
+		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${correct}`;
 		$('#feedback').classList.add('hunimal-font');
 	}
 }
@@ -110,6 +111,27 @@ window.addEventListener('load', () => {
 		}
 	});
 
+	// Build numpad
+	const numpad = $('#numpad');
+	for (let i=0; i<10; i++) {
+		const tr = document.createElement('tr');
+		numpad.appendChild(tr);
+		for (let j=0; j<10; j++) {
+			const td = document.createElement('td');
+			tr.appendChild(td);
+			td.innerText = numToHunimal(i*10 + j);
+			td.addEventListener('mouseenter', e => {
+				td.classList.add('pink');
+			});
+			td.addEventListener('mouseout', e => {
+				td.classList.remove('pink');
+			});
+			td.addEventListener('click', e => {
+				$('#text').value += td.innerText;
+			});
+		}
+	}
+
 	$('#h2d').addEventListener('click', e => {
 		e.preventDefault();
 		changeType('h2d');
@@ -129,18 +151,28 @@ window.addEventListener('load', () => {
 		e.preventDefault();
 		$('#submit').disabled = true;
 		$('#next').disabled = false;
-		let mychoice = 0;
-		for (let i=0; i<4; i++) {
-			if ($('#choice' + i).checked) {
-				mychoice = i;
+		if (type == 'mult') {
+			nTried++;
+			if ($('#text').value.trim() == correct) {
+				nCorrect++;
+				$('#feedback').innerText = 'Correct!';
+			} else {
+				$('#feedback').innerText = `Incorrect: ${feedback}`;
 			}
-		}
-		nTried++;
-		if (mychoice == correct) {
-			nCorrect++;
-			$('#feedback').innerText = 'Correct!';
 		} else {
-			$('#feedback').innerText = `Incorrect: ${feedback}`;
+			let mychoice = 0;
+			for (let i=0; i<4; i++) {
+				if ($('#choice' + i).checked) {
+					mychoice = i;
+				}
+			}
+			nTried++;
+			if (mychoice == correct) {
+				nCorrect++;
+				$('#feedback').innerText = 'Correct!';
+			} else {
+				$('#feedback').innerText = `Incorrect: ${feedback}`;
+			}
 		}
 		$('#score').innerText = `${nCorrect}/${nTried}`;
 	});

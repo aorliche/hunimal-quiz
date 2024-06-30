@@ -10,3 +10,12 @@
 #choices {
 	margin-bottom: 10px;
 }
+
+.pink {
+	background-color: #fcc;
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}

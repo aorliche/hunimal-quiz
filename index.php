@@ -34,11 +34,16 @@
 				<label class="form-check-label" id='label3' for="choice3"></label>
 			</div>
 		</div>
+		 <div id='text-container' class="input-group mb-3 hidden">
+			<span class="input-group-text" id="instructions">Use Hunimal Numpad</span>
+			<input type="text" id='text' class="form-control hunimal-font">
+		</div>
 		<p>
 			<button type="button" class="btn btn-primary" id='submit'>Submit</button>	
 			<button type="button" class="btn btn-primary" id='next' disabled>Next</button>	
 		</p>
 		<p id='feedback'></p>
+		<table id='numpad' class='hunimal-font'></table>
 	</div>
 </body>
 </html>
