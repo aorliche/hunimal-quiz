@@ -2,7 +2,8 @@
 <html>
 <head>
 	<script src='quiz.js'></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href='quiz.css' rel='stylesheet'>
 </head>
 <body>
 	<div class='container'>
@@ -13,8 +14,8 @@
 				<li class='nav-item'><a href='#' id='mult' class='nav-link'>Multiplication</a></li>
 			</ul>
 		</header>
-		<div>Score: <span id='score'>0/0</span></div>
-		<div id='question'></div>
+		<p>Score: <span id='score'>0/0</span></p>
+		<p id='question'></p>
 		<div id='choices'>
 			<div class='form-check'>
 				<input class="form-check-input" type="radio" name="choices" id="choice0" checked>
@@ -33,8 +34,11 @@
 				<label class="form-check-label" id='label3' for="choice3"></label>
 			</div>
 		</div>
-		<button type="button" class="btn btn-primary" id='submit'>Submit</button>	
-		<div id='feedback'></div>
+		<p>
+			<button type="button" class="btn btn-primary" id='submit'>Submit</button>	
+			<button type="button" class="btn btn-primary" id='next' disabled>Next</button>	
+		</p>
+		<p id='feedback'></p>
 	</div>
 </body>
 </html>

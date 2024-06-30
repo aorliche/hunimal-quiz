@@ -20,6 +20,20 @@ function shuffle(arr) {
 	}
 }
 
+function numToHunimal(num) {
+	if (num == 0) {
+		return "&#x5500;";
+	}
+	let hun = "";
+	while (num > 0) {
+		let ones = num % 10;
+		let tens = Math.floor(num/10) % 10;
+		hun = `${String.fromCharCode(0x5500 + 0x10*tens + ones)}${hun}`;
+        num = Math.floor(num/100);
+	}
+	return hun;
+}
+
 function changeType(typ) {
 	['h2d', 'd2h', 'mult'].forEach(t => {
 		$('#' + t).classList.remove('active');
@@ -29,16 +43,21 @@ function changeType(typ) {
 		regenQuestion(typ);
 	}
 	type = typ;
+	$('#submit').disabled = false;
+	$('#next').disabled = true;
+	$('#feedback').innerText = '';
 }
 
 function regenQuestion(typ) {
 	shuffle(nums);
 	shuffle(choices);
 	for (let i=0; i<4; i++) {
+		$('#label' + i).classList.remove("hunimal-font");
 		if (choices[i] == 0) {
 			correct = i;
 		}
 	}
+	$('#feedback').classList.remove('hunimal-font');
 	let cs = [];
 	if (typ == 'h2d') {
 		const q = `What is ${huns[nums[0]]} in decimal?`;
@@ -57,6 +76,20 @@ function regenQuestion(typ) {
 		$('#label2').innerText = huns[nums[choices[2]]];
 		$('#label3').innerText = huns[nums[choices[3]]];
 		feedback = `${decs[nums[0]]} is ${huns[nums[0]]}`;
+	}
+	if (typ == 'mult') {
+		const q = `What is ${huns[nums[0]]} times ${huns[nums[1]]}?`;
+		$('#question').innerText = q;
+		correct = Math.floor(Math.random()*4);
+		for (let i=0; i<4; i++) {
+			$('#label' + i).classList.add("hunimal-font");
+			const num = nums[(i+1)*2]*nums[(i+1)*2+1];
+			$('#label' + i).innerText = numToHunimal(num);
+		}
+		const a = numToHunimal(nums[0]*nums[1]);
+		$('#label' + correct).innerText = a;
+		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${a}`;
+		$('#feedback').classList.add('hunimal-font');
 	}
 }
 
@@ -94,11 +127,8 @@ window.addEventListener('load', () => {
 
 	$('#submit').addEventListener('click', e => {
 		e.preventDefault();
-		if ($('#submit').innerText == 'Next') {
-			regenQuestion(type);	
-			$('#submit').innerText = 'Submit';
-			return;
-		}
+		$('#submit').disabled = true;
+		$('#next').disabled = false;
 		let mychoice = 0;
 		for (let i=0; i<4; i++) {
 			if ($('#choice' + i).checked) {
@@ -113,6 +143,13 @@ window.addEventListener('load', () => {
 			$('#feedback').innerText = `Incorrect: ${feedback}`;
 		}
 		$('#score').innerText = `${nCorrect}/${nTried}`;
-		$('#submit').innerText = 'Next';
+	});
+
+	$('#next').addEventListener('click', e => {
+		e.preventDefault();
+		regenQuestion(type);	
+		$('#submit').disabled = false;
+		$('#next').disabled = true;
+		$('#feedback').innerText = '';
 	});
 });
