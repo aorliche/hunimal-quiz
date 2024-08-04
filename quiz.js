@@ -10,6 +10,8 @@ let choices = [...Array(4).keys()];
 let feedback = 'No feedback';
 let nCorrect = 0;
 let nTried = 0;
+let time = 0;
+let lastStart = 0;
 
 function shuffle(arr) {
 	for (let i=0; i<arr.length; i++) {
@@ -94,6 +96,16 @@ function regenQuestion(typ) {
 	}
 }
 
+function secondsToTime(sec) {
+	let h = Math.floor(sec/3600);
+	let m = Math.floor(sec/60) % 60;
+	let s = sec % 60;
+	h = ("0" + h).slice(-2);
+	m = ("0" + m).slice(-2);
+	s = ("0" + s).slice(-2);
+	return `${h}:${m}:${s}`;
+}
+
 window.addEventListener('load', () => {
 	fetch('decimal.txt').then(resp => resp.text()).then(txt => {
 		decs = txt.split(/\r?\n/)
@@ -151,6 +163,7 @@ window.addEventListener('load', () => {
 		e.preventDefault();
 		$('#submit').disabled = true;
 		$('#next').disabled = false;
+		const oldCorrect = nCorrect;
 		if (type == 'mult') {
 			nTried++;
 			if ($('#text').value.trim() == correct) {
@@ -175,6 +188,13 @@ window.addEventListener('load', () => {
 			}
 		}
 		$('#score').innerText = `${nCorrect}/${nTried}`;
+		// Update scoreboard
+		const name = $('#name').value;
+		const delta = time - lastStart;
+		const corr = nCorrect-oldCorrect;
+		console.log(`updating ${name} ${delta} seconds ${corr} correct`);
+		const uri = `update-quiz.php?name=${encodeURIComponent(name)}&delta=${delta}&corr=${corr}`;
+		fetch(uri);
 	});
 
 	$('#next').addEventListener('click', e => {
@@ -183,5 +203,12 @@ window.addEventListener('load', () => {
 		$('#submit').disabled = false;
 		$('#next').disabled = true;
 		$('#feedback').innerText = '';
+		lastStart = time;
 	});
+
+	setInterval(() => {
+		time += 1;
+		console.log(time);
+		$('#time').innerText = secondsToTime(time);
+	}, 1000);
 });
