@@ -208,7 +208,7 @@ window.addEventListener('load', () => {
 
 	setInterval(() => {
 		time += 1;
-		console.log(time);
-		$('#time').innerText = secondsToTime(time);
+		//console.log(time);
+		$('#time').innerText = secondsToTime(time-lastStart);
 	}, 1000);
 });
