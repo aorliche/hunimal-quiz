@@ -12,6 +12,7 @@ let nCorrect = 0;
 let nTried = 0;
 let time = 0;
 let lastStart = 0;
+let active = true;
 
 function shuffle(arr) {
 	for (let i=0; i<arr.length; i++) {
@@ -195,6 +196,8 @@ window.addEventListener('load', () => {
 		console.log(`updating ${name} ${delta} seconds ${corr} correct`);
 		const uri = `update-quiz.php?name=${encodeURIComponent(name)}&delta=${delta}&corr=${corr}`;
 		fetch(uri);
+        active = false;
+		$('#time').innerText = secondsToTime(time-lastStart);
 	});
 
 	$('#next').addEventListener('click', e => {
@@ -204,11 +207,14 @@ window.addEventListener('load', () => {
 		$('#next').disabled = true;
 		$('#feedback').innerText = '';
 		lastStart = time;
+        active = true;
 	});
 
 	setInterval(() => {
 		time += 1;
 		//console.log(time);
-		$('#time').innerText = secondsToTime(time-lastStart);
+        if (active) {
+            $('#time').innerText = secondsToTime(time-lastStart);
+        }
 	}, 1000);
 });
