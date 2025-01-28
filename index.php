@@ -18,7 +18,7 @@
 			<span class="input-group-text" id="name-label">Name</span>
 			<input type="name" id='name' class="form-control hunimal-font" value='Anonymous'>
 		</div>
-		<p>Score: <span id='score'>0/0</span> Time: <span id='time'>00:00:00</span></p>
+		<p>Score: <span id='score'>0/0</span> Time: <span id='time' class='hunimal-font'>00:00:00</span></p>
 		<p id='question'></p>
 		<div id='choices'>
 			<div class='form-check'>

@@ -6,6 +6,22 @@
 	<th>Tried</th>
 </tr>
 <?php
+    function likesToHunimal($likes) {
+        if ($likes == 0) {
+            return "&#x5500";
+        }
+        $hun = "";
+        while ($likes > 0) {
+            $digit = $likes % 100;
+            if ($digit < 10) {
+                $digit = "0$digit";
+            }
+            $hun = "&#x55$digit;$hun";
+            $likes = intval($likes/100);
+        }
+        return $hun;
+    }
+
     $servername = "localhost";
     $username = "calmprep_anton";
     $password = "MySQL1@bbb";
@@ -21,7 +37,7 @@
 	$res = $stmt->get_result();
 
 	while (($row = $res->fetch_assoc())) {
-		echo "<tr><td>".$row['name']."</td><td>".$row['seconds']."</td><td>".$row['correct']."</td><td>".$row['tried']."</td></tr>";
+		echo "<tr><td>".$row['name']."</td><td class='hunimal-font'>".likesToHunimal($row['seconds'])."</td><td>".$row['correct']."</td><td>".$row['tried']."</td></tr>";
 	}
 ?>
 </table>

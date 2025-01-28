@@ -98,12 +98,12 @@ function regenQuestion(typ) {
 }
 
 function secondsToTime(sec) {
-	let h = Math.floor(sec/3600);
-	let m = Math.floor(sec/60) % 60;
-	let s = sec % 60;
-	h = ("0" + h).slice(-2);
+	let h = numToHunimal(Math.floor(sec/3600));
+	let m = numToHunimal(Math.floor(sec/60) % 60);
+	let s = numToHunimal(sec % 60);
+	/*h = ("0" + h).slice(-2);
 	m = ("0" + m).slice(-2);
-	s = ("0" + s).slice(-2);
+	s = ("0" + s).slice(-2);*/
 	return `${h}:${m}:${s}`;
 }
 
