@@ -8,6 +8,15 @@
 <body>
 	<div class='container'>
 		<header class='d-flex justify-content-center py-3'>
+			Choose your character!
+			<div class='form-check form-check-inline'>
+				<input class=form-check-input type='checkbox' id='anton'>
+				<label class='form-check-label' for='anton'>
+					<img src='image/Anton.png' height='100'>
+				</label>
+			</div>
+		</header>
+		<header class='d-flex justify-content-center py-3'>
 			<ul class='nav nav-pills'>
 				<li class='nav-item'><a href='#' id='h2d' class='nav-link active'>Hun to Dec</a></li>
 				<li class='nav-item'><a href='#' id='d2h' class='nav-link'>Dec to Hun</a></li>
