@@ -217,4 +217,14 @@ window.addEventListener('load', () => {
             $('#time').innerText = secondsToTime(time-lastStart);
         }
 	}, 1000);
+
+    const chars = ['anton', 'david', 'albert', 'charles', 'hunimaniac', 'decimator'];
+    const longChars = ['Anton the Pig', 'David the Crocodile', 'Albert Swinestein',
+        'Charles Hogwin', 'The Hunimaniac', 'The Decimator'];
+
+    for (let i=0; i<chars.length; i++) {
+        $(`#${chars[i]}`).addEventListener('click', e => {
+            $('#name').value = longChars[i];
+        });
+    }
 });
