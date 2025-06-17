@@ -9,12 +9,32 @@
 	<div class='container'>
 		<header class='d-flex justify-content-center py-3'>
 			Choose your character!
-			<div class='form-check form-check-inline'>
-				<input class=form-check-input type='checkbox' id='anton'>
-				<label class='form-check-label' for='anton'>
-					<img src='image/Anton.png' height='100'>
-				</label>
-			</div>
+        </header>
+		<header class='d-flex justify-content-center py-3'>
+            <input class='btn-check' type='radio' name='chars' id='anton' checked>
+            <label class='btn btn-outline-primary' for='anton'>
+                <img src='image/Anton.png' height='100'>
+            </label>
+            <input class='btn-check' type='radio' name='chars' id='david'>
+            <label class='btn btn-outline-primary' for='david'>
+                <img src='image/David.png' height='100'>
+            </label>
+            <input class='btn-check' type='radio' name='chars' id='albert'>
+            <label class='btn btn-outline-primary' for='albert'>
+                <img src='image/Albert.png' height='100'>
+            </label>
+            <input class='btn-check' type='radio' name='chars' id='charles'>
+            <label class='btn btn-outline-primary' for='charles'>
+                <img src='image/Charles.png' height='100'>
+            </label>
+            <input class='btn-check' type='radio' name='chars' id='hunimaniac'>
+            <label class='btn btn-outline-primary' for='hunimaniac'>
+                <img src='image/Hunimaniac.png' height='100'>
+            </label>
+            <input class='btn-check' type='radio' name='chars' id='decimator'>
+            <label class='btn btn-outline-primary' for='decimator'>
+                <img src='image/Decimator.png' height='100'>
+            </label>
 		</header>
 		<header class='d-flex justify-content-center py-3'>
 			<ul class='nav nav-pills'>
