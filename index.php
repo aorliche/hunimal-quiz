@@ -5,6 +5,27 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<link href='quiz.css' rel='stylesheet'>
 </head>
+<?php
+    $servername = "localhost";
+    $username = "calmprep_anton";
+    $password = "MySQL1@bbb";
+    $dbname = "calmprep_hunimal";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$stmt = $conn->prepare('select name,seconds from quiz_times_shortest');
+	$stmt->execute();
+	$res = $stmt->get_result();
+
+    $name_seconds_map = array();
+
+    while ($row = $res->fetch_assoc()) {
+        $name_seconds_map[$row['name']] = $row['seconds'];
+    }
+?>
 <body>
 	<div class='container'>
 		<header class='d-flex justify-content-center py-3'>
@@ -36,6 +57,26 @@
                 <img src='image/Decimator.png' height='100'>
             </label>
 		</header>
+        <header class='d-flex justify-content-center hunimal-font'>
+            <p id='anton-time' style='display: none'>
+                Best time: <?= $name_seconds_map['Anton the Pig'] ?>
+            </p>
+            <p id='david-time' style='display: none'>
+                Best time: <?= $name_seconds_map['David the Crocodile'] ?>
+            </p>
+            <p id='albert-time' style='display: none'>
+                Best time: <?= $name_seconds_map['Albert Swinestein'] ?>
+            </p>
+            <p id='charles-time' style='display: none'>
+                Best time: <?= $name_seconds_map['Charles Hogwin'] ?>
+            </p>
+            <p id='hunimaniac-time' style='display: none'>
+                Best time: <?= $name_seconds_map['The Hunimaniac'] ?>
+            </p>
+            <p id='decimator-time' style='display: none'>
+                Best time: <?= $name_seconds_map['The Decimator'] ?>
+            </p>
+        </header>
 		<header class='d-flex justify-content-center py-3'>
 			<ul class='nav nav-pills'>
 				<li class='nav-item'><a href='#' id='h2d' class='nav-link active'>Hun to Dec</a></li>

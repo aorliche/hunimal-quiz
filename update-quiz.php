@@ -26,4 +26,22 @@
 		$stmt->bind_param('iis', $i1, $i2, $_GET['name']);
 		$stmt->execute();
 	}
+
+    // Update fastest time
+    if ($_GET['type'] == 'mult') {
+        $stmt = $conn->prepare('select seconds from quiz_times_shortest where name = ?');
+        $stmt->bind_param('s', $_GET['name']);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows == 1) {
+            $row = $res->fetch_assoc();
+            $seconds = intval($_GET['delta']);
+            if ($seconds < $row['seconds']) {
+                $stmt = $conn->prepare('update quiz_times_shortest set seconds = ? where name = ?');
+                $stmt->bind_param('is', $seconds, $_GET['name']);
+                $stmt->execute();
+            }
+        }
+    }
 ?>

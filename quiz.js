@@ -14,6 +14,10 @@ let time = 0;
 let lastStart = 0;
 let active = true;
 
+const chars = ['anton', 'david', 'albert', 'charles', 'hunimaniac', 'decimator'];
+const longChars = ['Anton the Pig', 'David the Crocodile', 'Albert Swinestein',
+    'Charles Hogwin', 'The Hunimaniac', 'The Decimator'];
+
 function shuffle(arr) {
 	for (let i=0; i<arr.length; i++) {
 		const j = Math.floor(arr.length*Math.random());
@@ -194,10 +198,19 @@ window.addEventListener('load', () => {
 		const delta = time - lastStart;
 		const corr = nCorrect-oldCorrect;
 		console.log(`updating ${name} ${delta} seconds ${corr} correct`);
-		const uri = `update-quiz.php?name=${encodeURIComponent(name)}&delta=${delta}&corr=${corr}`;
+		const uri = `update-quiz.php?name=${encodeURIComponent(name)}&delta=${delta}&corr=${corr}&type=${type}`;
 		fetch(uri);
         active = false;
 		$('#time').innerText = secondsToTime(time-lastStart);
+        // update fastest time
+        if (corr == 1 && type == 'mult') {
+            for (let i=0; i<longChars.length; i++) {
+                const bestTime = parseInt($(`#${chars[i]}-time`).innerText.split('Best time: ')[1]);
+                if (name == longChars[i] && delta < bestTime) {
+                    $(`#${chars[i]}-time`).innerText = `Best time: ${delta}`;
+                }
+            }
+        }
 	});
 
 	$('#next').addEventListener('click', e => {
@@ -218,13 +231,13 @@ window.addEventListener('load', () => {
         }
 	}, 1000);
 
-    const chars = ['anton', 'david', 'albert', 'charles', 'hunimaniac', 'decimator'];
-    const longChars = ['Anton the Pig', 'David the Crocodile', 'Albert Swinestein',
-        'Charles Hogwin', 'The Hunimaniac', 'The Decimator'];
-
     for (let i=0; i<chars.length; i++) {
         $(`#${chars[i]}`).addEventListener('click', e => {
             $('#name').value = longChars[i];
+            for (let j=0; j<chars.length; j++) {
+                $(`#${chars[j]}-time`).style.display = 'none';
+            }
+            $(`#${chars[i]}-time`).style.display = 'block';
         });
     }
 });
