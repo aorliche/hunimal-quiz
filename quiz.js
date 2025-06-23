@@ -96,7 +96,9 @@ function regenQuestion(typ) {
 		$('#question').innerText = `What is ${huns[nums[0]]} (${numToHunimal(nums[0])}) times ${huns[nums[1]]} (${numToHunimal(nums[1])})?`;
 		$('#question').classList.add('hunimal-font');
 		correct = numToHunimal(nums[0]*nums[1]);
-		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${correct}`;
+        const digit1 = Math.floor(nums[0]*nums[1]/100);
+        const digit2 = (nums[0]*nums[1])%100;
+		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${correct} (${huns[digit1]} ${huns[digit2]})`;
 		$('#feedback').classList.add('hunimal-font');
 	}
 }
