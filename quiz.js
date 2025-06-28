@@ -175,7 +175,7 @@ window.addEventListener('load', () => {
 			nTried++;
 			if ($('#text').value.trim() == correct) {
 				nCorrect++;
-				$('#feedback').innerText = 'Correct!';
+				$('#feedback').innerText = `Correct! ${feedback}`;
 			} else {
 				$('#feedback').innerText = `Incorrect: ${feedback}`;
 			}
