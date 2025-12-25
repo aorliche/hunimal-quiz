@@ -68,6 +68,9 @@ function regenQuestion(typ) {
 	$('#text-container').classList.add('hidden');
 	$('#choices').classList.remove('hidden');
 	$('#numpad').classList.add('hidden');
+    $('#numpad').classList.remove('inline-block');
+    $('#ranges-mult').classList.add('hidden');
+    $('#ranges-mult').classList.remove('inline-block');
 	$('#question').classList.remove('hunimal-font');
 	let cs = [];
 	if (typ == 'h2d') {
@@ -89,16 +92,41 @@ function regenQuestion(typ) {
 		feedback = `${decs[nums[0]]} is ${huns[nums[0]]}`;
 	}
 	if (typ == 'mult') {
+        // Custom nums code using ranges
+        const min1 = parseInt($('#range1min').value);
+        const max1 = parseInt($('#range1max').value);
+        const min2 = parseInt($('#range2min').value);
+        const max2 = parseInt($('#range2max').value);
+        let num1, num2;
+        if (max1 > min1) {
+            num1 = Math.floor((max1-min1)*Math.random())+min1;
+            console.log(num1);
+        } else {
+            num1 = Math.floor((min1-max1)*Math.random())+max1;
+        }
+        if (max2 > min2) {
+            num2 = Math.floor((max2-min2)*Math.random())+min2;
+        } else {
+            num2 = Math.floor((min2-max2)*Math.random())+max2;
+        }
 		$('#text').value = '';
 		$('#text-container').classList.remove('hidden');
 		$('#choices').classList.add('hidden');
 		$('#numpad').classList.remove('hidden');
-		$('#question').innerText = `What is ${huns[nums[0]]} (${numToHunimal(nums[0])}) times ${huns[nums[1]]} (${numToHunimal(nums[1])})?`;
+		$('#numpad').classList.add('inline-block');
+		$('#ranges-mult').classList.remove('hidden');
+		$('#ranges-mult').classList.add('inline-block');
+		//$('#question').innerText = `What is ${huns[nums[0]]} (${numToHunimal(nums[0])}) times ${huns[nums[1]]} (${numToHunimal(nums[1])})?`;
+		$('#question').innerText = `What is ${huns[num1]} (${numToHunimal(num1)}) times ${huns[num2]} (${numToHunimal(num2)})?`;
 		$('#question').classList.add('hunimal-font');
-		correct = numToHunimal(nums[0]*nums[1]);
+		correct = numToHunimal(num1*num2);
+        const digit1 = Math.floor(num1*num2/100);
+        const digit2 = (num1*num2)%100;
+		feedback = `${huns[num1]} times ${huns[num2]} is ${correct} (${huns[digit1]} ${huns[digit2]})`;
+		/*correct = numToHunimal(nums[0]*nums[1]);
         const digit1 = Math.floor(nums[0]*nums[1]/100);
         const digit2 = (nums[0]*nums[1])%100;
-		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${correct} (${huns[digit1]} ${huns[digit2]})`;
+		feedback = `${huns[nums[0]]} times ${huns[nums[1]]} is ${correct} (${huns[digit1]} ${huns[digit2]})`;*/
 		$('#feedback').classList.add('hunimal-font');
 	}
 }
@@ -224,6 +252,22 @@ window.addEventListener('load', () => {
 		lastStart = time;
         active = true;
 	});
+
+    $('#range1min').addEventListener('input', e => {
+        $('#range1minvalue').textContent = $('#range1min').value;
+    });
+    
+    $('#range1max').addEventListener('input', e => {
+        $('#range1maxvalue').textContent = $('#range1max').value;
+    });
+    
+    $('#range2min').addEventListener('input', e => {
+        $('#range2minvalue').textContent = $('#range2min').value;
+    });
+    
+    $('#range2max').addEventListener('input', e => {
+        $('#range2maxvalue').textContent = $('#range2max').value;
+    });
 
 	setInterval(() => {
 		time += 1;

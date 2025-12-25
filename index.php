@@ -118,6 +118,31 @@
 		</p>
 		<p id='feedback'></p>
 		<table id='numpad' class='hunimal-font'></table>
+        <div id='ranges-mult' style='vertical-align: top; margin-left: 20px;'>
+            <label for='range1min' class='form-label'>Mult number 1 min</label>
+            <input type='range' class='form-range' min='1' max='99' step='1' value='1' id='range1min'>
+            <output for='range1min' id='range1minvalue'>1</output><br>
+            <label for='range1max' class='form-label'>Mult number 1 max</label>
+            <input type='range' class='form-range' min='1' max='99' step='1' value='99' id='range1max'>
+            <output for='range1max' id='range1maxvalue'>99</output><br>
+            <label for='range2min' class='form-label'>Mult number 2 min</label>
+            <input type='range' class='form-range' min='1' max='99' step='1' value='1' id='range2min'>
+            <output for='range2min' id='range2minvalue'>1</output><br>
+            <label for='range2max' class='form-label'>Mult number 2 max</label>
+            <input type='range' class='form-range' min='1' max='99' step='1' value='99' id='range2max'>
+            <output for='range2max' id='range2maxvalue'>99</output><br>
+        </div>
+    <!-- Ranges for multiply -->
+    <style>
+input[type='range'] {
+    width: 40%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.inline-block {
+    display: inline-block;
+}
+    </style>
 	</div>
 </body>
 </html>
