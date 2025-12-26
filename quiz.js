@@ -72,6 +72,7 @@ function regenQuestion(typ) {
     $('#ranges-mult').classList.add('hidden');
     $('#ranges-mult').classList.remove('inline-block');
 	$('#question').classList.remove('hunimal-font');
+    $('#clear').classList.add('hidden');
 	let cs = [];
 	if (typ == 'h2d') {
 		const q = `What is ${huns[nums[0]]} in decimal?`;
@@ -116,6 +117,7 @@ function regenQuestion(typ) {
 		$('#numpad').classList.add('inline-block');
 		$('#ranges-mult').classList.remove('hidden');
 		$('#ranges-mult').classList.add('inline-block');
+        $('#clear').classList.remove('hidden');
 		//$('#question').innerText = `What is ${huns[nums[0]]} (${numToHunimal(nums[0])}) times ${huns[nums[1]]} (${numToHunimal(nums[1])})?`;
 		$('#question').innerText = `What is ${huns[num1]} (${numToHunimal(num1)}) times ${huns[num2]} (${numToHunimal(num2)})?`;
 		$('#question').classList.add('hunimal-font');
@@ -267,6 +269,11 @@ window.addEventListener('load', () => {
     
     $('#range2max').addEventListener('input', e => {
         $('#range2maxvalue').textContent = $('#range2max').value;
+    });
+
+    $('#clear').addEventListener('click', e => {
+        e.preventDefault();
+        $('#text').value = '';
     });
 
 	setInterval(() => {

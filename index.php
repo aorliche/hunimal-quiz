@@ -115,6 +115,7 @@
 		<p>
 			<button type="button" class="btn btn-primary" id='submit'>Submit</button>	
 			<button type="button" class="btn btn-primary" id='next' disabled>Next</button>	
+            <button type='button' class='btn btn-primary' id='clear'>Clear</button>
 		</p>
 		<p id='feedback'></p>
 		<table id='numpad' class='hunimal-font'></table>
